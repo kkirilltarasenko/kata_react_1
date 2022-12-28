@@ -14,7 +14,8 @@
     "overrides": [
     ],
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "project": ["./tsconfig"]
     },
     "plugins": [
         "react",
