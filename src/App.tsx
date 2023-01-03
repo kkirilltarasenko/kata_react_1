@@ -19,12 +19,12 @@ export default class App extends Component {
             {id: 2, body: 'Completed', active: false},
             {id: 3, body: 'Active', active: false},
         ],
-        items: 0
+        items: 0,
     }
 
     createTodo = (todo: object) : void => {
         this.setState({
-            data: [...this.state.data, todo]
+            data: [...this.state.data, todo],
         });
     }
 
@@ -143,7 +143,9 @@ export default class App extends Component {
     render() {
         return(
             <section className="todoapp">
-                <TodoHeader createTodo={this.createTodo}/>
+                <TodoHeader 
+                    createTodo={this.createTodo}
+                />
                 <TodoList
                     data={this.state.data}
                     setComplete={this.setComplete}

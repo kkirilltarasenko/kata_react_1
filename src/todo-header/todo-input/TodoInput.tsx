@@ -2,45 +2,49 @@ import React, { Component } from 'react';
 
 import './todoInput.css';
 
-interface Input {
-    createTodo: (todo: object) => void
+interface InputProps {
+    createTodo: (todo: object) => void,
+}
+
+interface InputState {
+    input: string
 }
 
 
-export default class TodoInput extends Component<Input> {
-    state = {
-        value: ''
+export default class TodoInput extends Component<InputProps, InputState> {
+    constructor (props: InputProps) {
+        super(props);
+        this.state = {input: ''}
     }
 
-    onEnterClick = (e: any) : void => {
-        if (e.keyCode === 13) {
-            const todo = {
+    onInputChange = (e: any) : void => {
+        this.setState({
+            input: e.target.value
+        });
+    }
+
+    onInputEnter = (e: any) : void => {
+        if (e.code === 'Enter') {
+            const newTodo = {
                 id: Math.random(),
-                body: this.state.value,
+                body: this.state.input,
                 completed: false,
                 vision: true,
                 edit: false
-            };
+            }
 
-            this.props.createTodo(todo);
+            this.props.createTodo(newTodo);
 
-            this.setState({
-                value: ''
-            });
+            this.setState({ input: '' });
         }
     }
 
     render() {
-        const input = document.getElementById('input');
-        if (input !== null) {
-            input.addEventListener('keydown', this.onEnterClick);
-        }
-
         return <input
-            id="input"
             className="new-todo"
-            value={this.state.value}
-            onChange={(e) => this.setState({value: e.target.value})}
+            value={this.state.input}
+            onChange={e => this.onInputChange(e)}
+            onKeyDown={e => this.onInputEnter(e)}
             placeholder="What needs to be done?"
             autoFocus
         />;

@@ -1,37 +1,36 @@
 import React, { Component } from 'react';
 
-interface Input {
+interface InputProps {
     id: number,
     value: string,
     editTodo: (id: number, body: string) => void,
 }
 
-export default class ItemInput extends Component<Input> {
-    state = {
-        value: this.props.value
+interface InputState {
+    input: string
+}
+
+export default class ItemInput extends Component<InputProps, InputState> {
+    constructor(props: InputProps) {
+        super(props);
+        this.state = { input: this.props.value }
     }
 
-    onValueChange = (e : any) : void => {
-        this.setState({
-            value: e.target.value
-        })
+    onInputChange = (e : any) : void => {
+        this.setState({ input: e.target.value });
+    }
+
+    onInputEnter = (e: any) : void => {
+        if (e.code === 'Enter') {
+            this.props.editTodo(this.props.id, this.state.input);
+        }
     }
 
     render() {
-        const input = document.getElementById('item-input');
-        if (input !== null) {
-            input.addEventListener('keydown', (e: any) : void => {
-                const changedBody = this.state.value;
-                if (e.keyCode === 13) {
-                    this.props.editTodo(this.props.id, changedBody);
-                }
-            })
-        }
-
         return <input
-            id="item-input"
-            value={this.state.value}
-            onChange={(e) => this.onValueChange(e)}
+            value={this.state.input}
+            onChange={(e) => this.onInputChange(e)}
+            onKeyDown = {(e) => this.onInputEnter(e)}
             type="text" className="edit"
             autoFocus
         />
