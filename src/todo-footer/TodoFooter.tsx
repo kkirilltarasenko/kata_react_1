@@ -13,7 +13,7 @@ interface Data {
 
 
 const TodoFooter : FC<Data> = ({filters, items, clearComplete, showAll, showActive, showCompleted}) => {
-    const [all, active, completed] = filters;
+    const [all, completed, active] = filters;
 
     return(
         <footer className="footer">
